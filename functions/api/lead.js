@@ -1,7 +1,7 @@
 export async function onRequestPost(context) {
-  const { ZAPIER_WEBHOOK_URL } = context.env;
+  const { CINC_API_TOKEN } = context.env;
 
-  if (!ZAPIER_WEBHOOK_URL) {
+  if (!CINC_API_TOKEN) {
     return new Response(JSON.stringify({ success: false, error: 'Server misconfiguration' }), {
       status: 500, headers: { 'Content-Type': 'application/json' }
     });
@@ -28,37 +28,52 @@ export async function onRequestPost(context) {
     nanoose: 'Nanoose Bay', coombs: 'Coombs & Errington', surprise: 'Mixed areas'
   };
 
-  const zapierPayload = {
-    first_name: firstName,
-    last_name: lastName,
-    email: email,
-    phone: phone || '',
-    source: 'Parksville-Qualicum Beach Local Guides',
-    lead_note: [
-      'Source: Parksville-Qualicum Beach Local Guides',
-      'Area of interest: ' + (areaLabels[area] || area || 'Not specified'),
-      'Group type: ' + (group || 'Not specified'),
-      'Vibe: ' + (vibe || 'Not specified'),
-      'Budget: ' + (budget || 'Not specified'),
-      'Duration: ' + (duration || 'Not specified'),
-      'Connection to area: ' + (connection || 'Not specified')
-    ].join('\n')
+  const noteContent = [
+    'Source: Parksville-Qualicum Beach Local Guides',
+    'Area of interest: ' + (areaLabels[area] || area || 'Not specified'),
+    'Group type: ' + (group || 'Not specified'),
+    'Vibe: ' + (vibe || 'Not specified'),
+    'Budget: ' + (budget || 'Not specified'),
+    'Duration: ' + (duration || 'Not specified'),
+    'Connection to area: ' + (connection || 'Not specified')
+  ].join('\n');
+
+  const cincPayload = {
+    username: email,
+    info: {
+      contact: {
+        first_name: firstName,
+        last_name: lastName,
+        ...(phone ? { phone } : {})
+      }
+    },
+    notes: [{ content: noteContent, category: 'general', is_pinned: true }]
   };
 
   try {
-    const zapRes = await fetch(ZAPIER_WEBHOOK_URL, {
+    const res = await fetch('https://public.cincapi.com/v2/site/leads', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(zapierPayload)
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + CINC_API_TOKEN
+      },
+      body: JSON.stringify(cincPayload)
     });
-    if (zapRes.ok) {
-      return new Response(JSON.stringify({ success: true }), { headers: { 'Content-Type': 'application/json' } });
+
+    if (res.ok) {
+      const result = await res.json();
+      const action = res.status === 201 ? 'created' : 'updated';
+      console.log('CINC lead ' + action + ': ' + result.id);
+      return new Response(JSON.stringify({ success: true, action }), { headers: { 'Content-Type': 'application/json' } });
     } else {
-      return new Response(JSON.stringify({ success: false, error: 'Webhook error' }), {
+      const err = await res.text();
+      console.error('CINC error ' + res.status + ': ' + err);
+      return new Response(JSON.stringify({ success: false, error: 'CINC API error' }), {
         status: 502, headers: { 'Content-Type': 'application/json' }
       });
     }
   } catch (err) {
+    console.error('Fetch failed:', err);
     return new Response(JSON.stringify({ success: false, error: 'Network error' }), {
       status: 500, headers: { 'Content-Type': 'application/json' }
     });

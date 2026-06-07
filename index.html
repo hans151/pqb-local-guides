@@ -3,8 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Parksville–Qualicum Weekend Planner | Parksville-Qualicum Beach Local Guides</title>
+  <title>Parksville–Qualicum Weekend Planner | Hans Suhr Local Guides</title>
+  <meta name="description" content="Get a free personalized Parksville–Qualicum weekend plan built for your crew, vibe, and neighbourhood — in about two minutes." />
+  <meta property="og:title" content="Parksville–Qualicum Weekend Planner — Free" />
+  <meta property="og:description" content="A personalized Parksville–Qualicum plan built for your crew and vibe in 2 minutes." />
+  <meta property="og:url" content="https://pqb-local-guides.pages.dev" />
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
       --ocean: #1a6b8a;
       --ocean-light: #2a8baf;
@@ -22,194 +28,1627 @@
       --shadow: 0 4px 24px rgba(26,107,138,0.10);
       --shadow-hover: 0 8px 32px rgba(26,107,138,0.18);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--sand); color: var(--text); min-height: 100vh; line-height: 1.5; }
-    .site-header { background: var(--white); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-    .site-header .brand { font-size: 0.85rem; font-weight: 700; color: var(--ocean); letter-spacing: 0.02em; }
-    .site-header .badge { font-size: 0.72rem; background: #e8f5e9; color: var(--forest); padding: 3px 10px; border-radius: 20px; font-weight: 600; }
-    .hero { background: linear-gradient(160deg, var(--ocean-dark) 0%, var(--ocean-light) 100%); color: var(--white); padding: 48px 20px 40px; text-align: center; }
-    .hero h1 { font-size: clamp(1.7rem, 5vw, 2.6rem); font-weight: 800; line-height: 1.2; margin-bottom: 14px; }
-    .hero p { font-size: 1rem; opacity: 0.88; max-width: 420px; margin: 0 auto; }
-    .sample-section { max-width: 540px; margin: 0 auto; padding: 32px 16px 0; }
-    .sample-label { text-align: center; font-size: 0.8rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
-    .sample-card { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 12px; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--sand);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--ocean-dark);
+      color: #fff;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    .site-header .brand {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .site-header .badge {
+      font-size: 0.72rem;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, var(--ocean-dark) 0%, var(--ocean-light) 100%);
+      color: var(--white);
+      padding: 48px 20px 40px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(1.7rem, 5vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .hero p {
+      font-size: 1rem;
+      opacity: 0.88;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    /* ── SAMPLE PLAN ── */
+    .sample-section {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 32px 16px 0;
+    }
+    .sample-label {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .sample-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px 18px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
     .sample-card .emoji { font-size: 1.6rem; flex-shrink: 0; margin-top: 2px; }
     .sample-card .info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
     .sample-card .meta { font-size: 0.78rem; color: var(--text-light); margin-bottom: 5px; }
     .sample-card .meta span { margin-right: 10px; }
     .sample-card p { font-size: 0.82rem; color: var(--text-light); line-height: 1.45; }
-    .plan-teaser { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; text-align: center; margin-bottom: 10px; font-size: 0.88rem; color: var(--text-light); }
+    .plan-teaser {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 0.88rem;
+      color: var(--text-light);
+    }
     .plan-teaser strong { color: var(--text); }
-    .cta-section { max-width: 540px; margin: 0 auto; padding: 24px 16px 0; display: flex; flex-direction: column; gap: 12px; }
-    .btn-primary { display: block; width: 100%; padding: 16px; background: var(--ocean); color: var(--white); border: none; border-radius: var(--radius); font-size: 1rem; font-weight: 700; cursor: pointer; text-align: center; transition: background 0.2s, transform 0.1s, box-shadow 0.2s; box-shadow: var(--shadow); }
-    .btn-primary:hover { background: var(--ocean-dark); box-shadow: var(--shadow-hover); transform: translateY(-1px); }
-    #quiz-section { max-width: 540px; margin: 0 auto; padding: 24px 16px 40px; display: none; }
+
+    /* ── MODE PICKER ── */
+    #mode-picker {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 24px 16px 8px;
+    }
+    .mode-label {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+    .mode-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .mode-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.18s;
+      box-shadow: var(--shadow);
+    }
+    .mode-card:hover {
+      border-color: var(--ocean);
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+    .mode-card .mode-icon { font-size: 2rem; margin-bottom: 8px; }
+    .mode-card .mode-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .mode-card .mode-desc {
+      font-size: 0.76rem;
+      color: var(--text-light);
+      line-height: 1.4;
+    }
+    .mode-card.featured {
+      border-color: var(--ocean);
+      background: linear-gradient(135deg, #f0f8ff 0%, #e8f4fa 100%);
+    }
+
+    /* ── VOICE SECTION ── */
+    #voice-section {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+      display: none;
+    }
+    #voice-section.visible { display: block; }
+
+    .voice-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .voice-card h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .voice-card .voice-sub {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    #voice-orb {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, var(--ocean) 0%, var(--ocean-light) 100%);
+      border-radius: 50%;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      box-shadow: 0 0 0 0 rgba(26,107,138,0.4);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    #voice-orb:hover { transform: scale(1.05); }
+    #voice-orb.listening {
+      animation: pulse-ring 1.4s ease-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(26,107,138,0.5); }
+      70%  { box-shadow: 0 0 0 24px rgba(26,107,138,0); }
+      100% { box-shadow: 0 0 0 0 rgba(26,107,138,0); }
+    }
+
+    #voice-status {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 24px;
+      min-height: 20px;
+    }
+
+    #btn-start-voice {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--ocean);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-bottom: 12px;
+    }
+    #btn-start-voice:hover { background: var(--ocean-dark); }
+
+    #voice-controls { display: none; }
+    #voice-controls.visible { display: block; }
+
+    .btn-end-call {
+      display: inline-block;
+      padding: 12px 28px;
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 12px;
+    }
+    .btn-end-call:hover { background: #b02a37; }
+
+    .voice-privacy {
+      font-size: 0.73rem;
+      color: var(--text-light);
+      margin-top: 16px;
+    }
+
+    #voice-building { display: none; }
+    #voice-building.visible { display: block; }
+
+    .back-to-chat {
+      margin-top: 20px;
+      font-size: 0.82rem;
+      color: var(--ocean);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* ── QUIZ SECTION (Aime chat style) ── */
+    #quiz-section {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+      display: none;
+    }
     #quiz-section.visible { display: block; }
-    .quiz-card { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 22px; }
-    .progress-bar { height: 4px; background: var(--border); border-radius: 4px; margin-bottom: 24px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--ocean); border-radius: 4px; transition: width 0.3s ease; }
-    .step { display: none; } .step.active { display: block; }
-    .step h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 20px; color: var(--text); line-height: 1.3; }
-    .name-input { width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-size: 1rem; color: var(--text); outline: none; transition: border-color 0.2s; margin-bottom: 16px; font-family: inherit; }
+
+    .aime-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 0 4px;
+    }
+    .aime-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--ocean-dark) 0%, var(--ocean-light) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      box-shadow: var(--shadow);
+    }
+    .aime-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .aime-role {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+    .aime-online {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+
+    .quiz-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px 20px;
+    }
+
+    #quiz-progress {
+      height: 3px;
+      background: var(--border);
+      border-radius: 3px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    #quiz-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--ocean) 0%, var(--ocean-light) 100%);
+      border-radius: 3px;
+      transition: width 0.35s ease;
+    }
+
+    .aime-bubble {
+      background: var(--sand);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) var(--radius-sm);
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+      position: relative;
+    }
+    .aime-bubble::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -8px;
+      border: 8px solid transparent;
+      border-right-color: var(--sand);
+      border-top: 0;
+    }
+
+    .step { display: none; }
+    .step.active { display: block; }
+
+    .name-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 16px;
+      font-family: inherit;
+    }
     .name-input:focus { border-color: var(--ocean); }
-    .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
     .option-grid.single-col { grid-template-columns: 1fr; }
-    .option-btn { padding: 14px 10px; border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--white); cursor: pointer; text-align: center; font-size: 0.88rem; font-weight: 600; color: var(--text); transition: all 0.15s; line-height: 1.4; }
-    .option-btn:hover { border-color: var(--ocean-light); background: #f0f8ff; }
-    .option-btn.selected { border-color: var(--ocean); background: #e8f4fa; color: var(--ocean-dark); }
+
+    .option-btn {
+      padding: 14px 10px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      cursor: pointer;
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: all 0.15s;
+      line-height: 1.4;
+    }
+    .option-btn:hover {
+      border-color: var(--ocean-light);
+      background: #f0f8ff;
+    }
+    .option-btn.selected {
+      border-color: var(--ocean);
+      background: #e8f4fa;
+      color: var(--ocean-dark);
+    }
     .option-btn .opt-emoji { display: block; font-size: 1.4rem; margin-bottom: 4px; }
     .option-btn .opt-label { font-size: 0.82rem; }
-    .nav-row { display: flex; gap: 10px; margin-top: 4px; }
-    .btn-back { flex: 0 0 auto; padding: 13px 20px; border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--white); color: var(--text-light); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
-    .btn-next { flex: 1; padding: 14px; background: var(--ocean); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+
+    .hint-text {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    .nav-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .btn-back {
+      flex: 0 0 auto;
+      padding: 13px 20px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      color: var(--text-light);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-back:hover { border-color: var(--ocean-light); color: var(--ocean); }
+
+    .btn-next {
+      flex: 1;
+      padding: 14px;
+      background: var(--ocean);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-next:hover { background: var(--ocean-dark); }
     .btn-next:disabled { background: #aac5d4; cursor: not-allowed; }
-    .hint-text { font-size: 0.75rem; color: var(--text-light); margin-bottom: 14px; font-style: italic; }
-    #building-section { max-width: 540px; margin: 0 auto; padding: 24px 16px 40px; display: none; }
+
+    /* ── BUILDING SPINNER ── */
+    #building-section {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+      display: none;
+    }
     #building-section.visible { display: block; }
-    .building-card { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 40px 24px; text-align: center; }
-    .spinner { width: 44px; height: 44px; border: 4px solid var(--border); border-top-color: var(--ocean); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 24px; }
+
+    .building-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .building-card h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+    .building-card p { font-size: 0.88rem; color: var(--text-light); margin-bottom: 28px; }
+
+    .spinner {
+      width: 44px; height: 44px;
+      border: 4px solid var(--border);
+      border-top-color: var(--ocean);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 24px;
+    }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .build-steps { text-align: left; }
-    .build-step { display: flex; align-items: center; gap: 12px; padding: 10px 0; font-size: 0.88rem; color: var(--text-light); border-bottom: 1px solid var(--border); }
+
+    .build-steps { text-align: left; max-width: 280px; margin: 0 auto; }
+    .build-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: 0.88rem;
+      color: var(--text-light);
+      border-bottom: 1px solid var(--border);
+    }
+    .build-step:last-child { border-bottom: none; }
+    .build-step .check { font-size: 1rem; width: 22px; text-align: center; }
+    .build-step .step-label { display: flex; align-items: center; gap: 8px; }
     .build-step.done { color: var(--text); font-weight: 600; }
     .build-step.done .check::after { content: '✅'; }
     .build-step:not(.done) .check::after { content: '⏳'; }
-    #plan-section { max-width: 540px; margin: 0 auto; padding: 24px 16px 40px; display: none; }
+
+    /* ── PLAN SECTION ── */
+    #plan-section {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 24px 16px 0;
+      display: none;
+    }
     #plan-section.visible { display: block; }
-    .plan-header-card { background: linear-gradient(135deg, var(--ocean) 0%, var(--ocean-light) 100%); color: var(--white); border-radius: var(--radius); padding: 24px 20px; margin-bottom: 16px; text-align: center; }
-    .plan-stop { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 14px; }
+
+    .plan-header-card {
+      background: linear-gradient(135deg, var(--ocean) 0%, var(--ocean-light) 100%);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .plan-header-card h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
+    .plan-header-card p { font-size: 0.88rem; opacity: 0.88; }
+
+    /* blur wrapper for plan stops */
+    .plan-blur-wrapper {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    #blur-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 220px;
+      background: linear-gradient(to bottom, transparent 0%, var(--sand) 75%);
+      border-radius: 0 0 var(--radius) var(--radius);
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    #blur-overlay.hidden { opacity: 0; pointer-events: none; }
+
+    #countdown-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ocean-dark);
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: var(--shadow);
+      z-index: 5;
+      transition: opacity 0.5s ease;
+    }
+    #countdown-badge.hidden { opacity: 0; pointer-events: none; }
+
+    .plan-stop {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
     .plan-stop .stop-emoji { font-size: 1.8rem; flex-shrink: 0; margin-top: 2px; }
     .plan-stop .stop-info h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-    .plan-stop .stop-meta { font-size: 0.78rem; color: var(--text-light); margin-bottom: 6px; display: flex; flex-wrap: wrap; gap: 8px; }
-    .plan-stop .stop-meta span { background: var(--sand); padding: 2px 8px; border-radius: 12px; font-weight: 500; }
+    .plan-stop .stop-meta {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-bottom: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .plan-stop .stop-meta span {
+      background: var(--sand);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 500;
+    }
     .plan-stop p { font-size: 0.84rem; color: var(--text-light); line-height: 1.5; }
-    .lead-card { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 22px; margin-bottom: 16px; }
-    .lead-input { width: 100%; padding: 13px 15px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-size: 0.95rem; color: var(--text); outline: none; transition: border-color 0.2s; margin-bottom: 12px; font-family: inherit; }
+
+    /* ── SHARE SECTION ── */
+    #share-section {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0 16px 16px;
+      display: none;
+    }
+    #share-section.visible { display: block; }
+
+    .share-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 18px;
+      text-align: center;
+    }
+    .share-card p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 14px;
+    }
+    .share-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .share-btn {
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid var(--border);
+      background: var(--white);
+      color: var(--text);
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .share-btn:hover { border-color: var(--ocean); color: var(--ocean); }
+    .share-btn.whatsapp { border-color: #25D366; color: #25D366; }
+    .share-btn.whatsapp:hover { background: #f0fff4; }
+    #copy-confirm {
+      font-size: 0.78rem;
+      color: #22c55e;
+      margin-top: 8px;
+      display: none;
+    }
+    #copy-confirm.visible { display: block; }
+
+    /* ── LEAD CAPTURE ── */
+    #lead-form-section {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0 16px 16px;
+      display: none;
+    }
+    #lead-form-section.visible { display: block; }
+
+    .lead-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 22px;
+    }
+    .lead-card h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
+    .lead-card .sub { font-size: 0.85rem; color: var(--text-light); margin-bottom: 20px; }
+
+    .lead-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .lead-input {
+      width: 100%;
+      padding: 13px 15px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 10px;
+      font-family: inherit;
+    }
     .lead-input:focus { border-color: var(--ocean); }
-    .consent-text { font-size: 0.73rem; color: var(--text-light); margin-bottom: 16px; line-height: 1.5; }
-    .btn-claim { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--ocean) 0%, var(--ocean-light) 100%); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 800; cursor: pointer; box-shadow: var(--shadow); }
-    .success-card { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px 22px; text-align: center; margin-bottom: 16px; display: none; }
-    .success-card.visible { display: block; }
-    .btn-restart { padding: 13px 28px; border: 2px solid var(--ocean); border-radius: var(--radius-sm); background: var(--white); color: var(--ocean); font-size: 0.9rem; font-weight: 700; cursor: pointer; }
-    .site-footer { background: var(--white); border-top: 1px solid var(--border); padding: 28px 20px; text-align: center; margin-top: 16px; }
-    .site-footer .agent-name { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+
+    #opt-in-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    #opt-in-cb {
+      width: 18px; height: 18px;
+      margin-top: 2px;
+      accent-color: var(--ocean);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .opt-in-label {
+      font-size: 0.73rem;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+    .opt-in-label a { color: var(--ocean); text-decoration: none; }
+
+    #form-error {
+      font-size: 0.8rem;
+      color: #dc3545;
+      margin-bottom: 10px;
+      display: none;
+    }
+    #form-error.visible { display: block; }
+
+    #btn-claim {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--ocean) 0%, var(--ocean-light) 100%);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      box-shadow: var(--shadow);
+    }
+    #btn-claim:hover { opacity: 0.92; transform: translateY(-1px); }
+    #btn-claim:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* ── SUCCESS ── */
+    #success-state {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0 16px 40px;
+      display: none;
+    }
+    #success-state.visible { display: block; }
+
+    .success-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px 24px;
+      text-align: center;
+    }
+    .success-card .big-emoji { font-size: 3rem; margin-bottom: 14px; }
+    .success-card h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+    .success-card p { font-size: 0.88rem; color: var(--text-light); margin-bottom: 24px; }
+
+    .btn-restart {
+      padding: 13px 28px;
+      border: 2px solid var(--ocean);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      color: var(--ocean);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-restart:hover { background: var(--ocean); color: var(--white); }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    .site-footer .remax-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #fff;
+      background: #e31837;
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+    .site-footer .agent-name { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
     .site-footer .agent-detail { font-size: 0.78rem; color: var(--text-light); margin-bottom: 8px; }
+    .site-footer .agent-links { font-size: 0.78rem; }
     .site-footer .agent-links a { color: var(--ocean); text-decoration: none; margin: 0 6px; }
     .site-footer .copyright { font-size: 0.72rem; color: #aaa; margin-top: 12px; }
   </style>
 </head>
 <body>
+
+<!-- HEADER -->
 <header class="site-header">
   <div class="brand">📍 Parksville-Qualicum Beach Local Guides</div>
-  <div class="badge">Free</div>
+  <div class="badge">FREE</div>
 </header>
+
+<!-- HERO -->
 <section class="hero">
   <h1>Your Perfect Parksville–Qualicum Weekend Starts Here</h1>
   <p>Get a personalized local plan built for your crew, your vibe, and your neighbourhood — in about two minutes.</p>
 </section>
+
+<!-- SAMPLE PLAN PREVIEW -->
 <div class="sample-section">
   <div class="sample-label">Here's what your plan looks like</div>
-  <div class="sample-card"><div class="emoji">☕</div><div class="info"><h3>Heritage Coffee</h3><div class="meta"><span>📍 Qualicum Beach Village</span><span>⏰ 9:00 AM</span><span>$</span></div><p>A proper flat white and a scone on the patio, right in the heart of the village. Locals love the morning light here.</p></div></div>
-  <div class="sample-card"><div class="emoji">🏖️</div><div class="info"><h3>Rathtrevor Beach Provincial Park</h3><div class="meta"><span>📍 Parksville</span><span>⏰ 10:30 AM</span><span>Free</span></div><p>One of BC's best family beaches. Shallow warm water at low tide, wide sand flats.</p></div></div>
-  <div class="sample-card"><div class="emoji">🐐</div><div class="info"><h3>Coombs Old Country Market</h3><div class="meta"><span>📍 Coombs</span><span>⏰ 1:00 PM</span><span>$</span></div><p>Yes, there are goats on the roof. Yes, it's worth it. Great food stalls, fresh produce, and quirky local shops.</p></div></div>
-  <div class="plan-teaser">Your plan has <strong>6–8 stops</strong> like this, mapped and ready. Takes 2 minutes to build.</div>
-</div>
-<div class="cta-section">
-  <button class="btn-primary" onclick="startQuiz()">💬 Build My Weekend Plan →</button>
-</div>
-<div id="quiz-section">
-  <div class="quiz-card">
-    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:10%"></div></div>
-    <div class="step active" id="step-1"><h2>First, what's your name?</h2><input type="text" class="name-input" id="name-input" placeholder="Your first name" autocomplete="given-name" /><div class="nav-row"><button class="btn-next" onclick="goNext(1)">Continue →</button></div></div>
-    <div class="step" id="step-2"><h2 id="step2-title">Who's joining you?</h2><div class="option-grid"><button class="option-btn" onclick="selectSingle(this,'group','solo')"><span class="opt-emoji">🧐</span><span class="opt-label">Solo</span></button><button class="option-btn" onclick="selectSingle(this,'group','couple')"><span class="opt-emoji">💑</span><span class="opt-label">Couple</span></button><button class="option-btn" onclick="selectSingle(this,'group','family')"><span class="opt-emoji">👨‍👩‍👧‍👦</span><span class="opt-label">Family</span></button><button class="option-btn" onclick="selectSingle(this,'group','friends')"><span class="opt-emoji">🍻</span><span class="opt-label">Friends</span></button></div><div class="nav-row"><button class="btn-back" onclick="goBack(2)">← Back</button><button class="btn-next" id="next-2" onclick="goNext(2)" disabled>Continue →</button></div></div>
-    <div class="step" id="step-3"><h2>Where do you want to explore?</h2><div class="option-grid"><button class="option-btn" onclick="selectSingle(this,'area','parksville')"><span class="opt-emoji">🏖️</span><span class="opt-label">Parksville</span></button><button class="option-btn" onclick="selectSingle(this,'area','qualicum')"><span class="opt-emoji">🌿</span><span class="opt-label">Qualicum Beach</span></button><button class="option-btn" onclick="selectSingle(this,'area','nanoose')"><span class="opt-emoji">🌊</span><span class="opt-label">Nanoose Bay</span></button><button class="option-btn" onclick="selectSingle(this,'area','coombs')"><span class="opt-emoji">🐐</span><span class="opt-label">Coombs &amp; Errington</span></button><button class="option-btn" onclick="selectSingle(this,'area','surprise')" style="grid-column:span 2"><span class="opt-emoji">🗺️</span><span class="opt-label">Surprise Me</span></button></div><div class="nav-row"><button class="btn-back" onclick="goBack(3)">← Back</button><button class="btn-next" id="next-3" onclick="goNext(3)" disabled>Continue →</button></div></div>
-    <div class="step" id="step-4"><h2>What's the vibe?</h2><p class="hint-text">Pick as many as you like</p><div class="option-grid"><button class="option-btn" onclick="selectMulti(this,'vibe','outdoors')"><span class="opt-emoji">🌲</span><span class="opt-label">Outdoors</span></button><button class="option-btn" onclick="selectMulti(this,'vibe','food')"><span class="opt-emoji">🍽️</span><span class="opt-label">Food &amp; Drink</span></button><button class="option-btn" onclick="selectMulti(this,'vibe','culture')"><span class="opt-emoji">🏛️</span><span class="opt-label">Arts &amp; Culture</span></button><button class="option-btn" onclick="selectMulti(this,'vibe','active')"><span class="opt-emoji">🚴</span><span class="opt-label">Active</span></button><button class="option-btn" onclick="selectMulti(this,'vibe','relaxed')"><span class="opt-emoji">☕</span><span class="opt-label">Relaxed</span></button><button class="option-btn" onclick="selectMulti(this,'vibe','family')"><span class="opt-emoji">🎪</span><span class="opt-label">Family Fun</span></button></div><div class="nav-row"><button class="btn-back" onclick="goBack(4)">← Back</button><button class="btn-next" id="next-4" onclick="goNext(4)" disabled>Continue →</button></div></div>
-    <div class="step" id="step-5"><h2>What's the budget feeling like?</h2><div class="option-grid"><button class="option-btn" onclick="selectSingle(this,'budget','free')"><span class="opt-emoji">🎁</span><span class="opt-label">Keep It Free</span></button><button class="option-btn" onclick="selectSingle(this,'budget','low')"><span class="opt-emoji">💸</span><span class="opt-label">Under $50</span></button><button class="option-btn" onclick="selectSingle(this,'budget','moderate')"><span class="opt-emoji">🍴</span><span class="opt-label">Moderate</span></button><button class="option-btn" onclick="selectSingle(this,'budget','treat')"><span class="opt-emoji">🥂</span><span class="opt-label">Treat Ourselves</span></button></div><div class="nav-row"><button class="btn-back" onclick="goBack(5)">← Back</button><button class="btn-next" id="next-5" onclick="goNext(5)" disabled>Continue →</button></div></div>
-    <div class="step" id="step-6"><h2>How much of the weekend?</h2><div class="option-grid single-col"><button class="option-btn" onclick="selectSingle(this,'duration','hours')"><span class="opt-emoji">⏱️</span><span class="opt-label">A few hours</span></button><button class="option-btn" onclick="selectSingle(this,'duration','day')"><span class="opt-emoji">☀️</span><span class="opt-label">Full day out</span></button><button class="option-btn" onclick="selectSingle(this,'duration','weekend')"><span class="opt-emoji">🗓️</span><span class="opt-label">Full weekend</span></button></div><div class="nav-row"><button class="btn-back" onclick="goBack(6)">← Back</button><button class="btn-next" id="next-6" onclick="goNext(6)" disabled>Continue →</button></div></div>
-    <div class="step" id="step-7"><h2 id="step7-title">How connected are you to the area?</h2><div class="option-grid single-col"><button class="option-btn" onclick="selectSingle(this,'connection','local')"><span class="opt-emoji">🏡</span><span class="opt-label">Local — I live here</span></button><button class="option-btn" onclick="selectSingle(this,'connection','visitor')"><span class="opt-emoji">🗺️</span><span class="opt-label">Visiting for the weekend</span></button><button class="option-btn" onclick="selectSingle(this,'connection','new')"><span class="opt-emoji">📍</span><span class="opt-label">Just moved here</span></button></div><div class="nav-row"><button class="btn-back" onclick="goBack(7)">← Back</button><button class="btn-next" id="next-7" onclick="buildPlan()" disabled>Build My Weekend →</button></div></div>
+
+  <div class="sample-card">
+    <div class="emoji">☕</div>
+    <div class="info">
+      <h3>Heritage Coffee</h3>
+      <div class="meta">
+        <span>📍 Qualicum Beach Village</span><span>⏰ 9:00 AM</span><span>$</span>
+      </div>
+      <p>A proper flat white and a scone on the patio, right in the heart of the village. Locals love the morning light here.</p>
+    </div>
+  </div>
+
+  <div class="sample-card">
+    <div class="emoji">🏖️</div>
+    <div class="info">
+      <h3>Rathtrevor Beach Provincial Park</h3>
+      <div class="meta">
+        <span>📍 Parksville</span><span>⏰ 10:30 AM</span><span>Free</span>
+      </div>
+      <p>One of BC's warmest swimming beaches. The tide goes out nearly a kilometre at low tide — perfect for families and long walks.</p>
+    </div>
+  </div>
+
+  <div class="sample-card">
+    <div class="emoji">🐐</div>
+    <div class="info">
+      <h3>Coombs Old Country Market</h3>
+      <div class="meta">
+        <span>📍 Coombs</span><span>⏰ 1:00 PM</span><span>$</span>
+      </div>
+      <p>Yes, there are goats on the roof. Yes, it's worth it. Local food stalls, fresh produce, and quirky shops in one spot.</p>
+    </div>
+  </div>
+
+  <div class="plan-teaser">
+    Your plan has <strong>6–8 stops</strong> like this, mapped and ready. Takes 2 minutes to build.
   </div>
 </div>
+
+<!-- MODE PICKER -->
+<div id="mode-picker">
+  <div class="mode-label">How would you like to build your plan?</div>
+  <div class="mode-cards">
+    <div class="mode-card" onclick="startVoice()">
+      <div class="mode-icon">🎙️</div>
+      <div class="mode-title">Talk to Aime</div>
+      <div class="mode-desc">Tap the mic and answer a few quick questions out loud</div>
+    </div>
+    <div class="mode-card featured" onclick="startChat()">
+      <div class="mode-icon">💬</div>
+      <div class="mode-title">Chat with Aime</div>
+      <div class="mode-desc">Answer a few taps — your plan is ready in under 2 minutes</div>
+    </div>
+  </div>
+</div>
+
+<!-- VOICE SECTION -->
+<div id="voice-section">
+  <div class="voice-card">
+    <h2>Talk to Aime</h2>
+    <p class="voice-sub">Tap the mic and answer a few questions. Your personalized plan gets built from the conversation — then sent straight to your phone or email.</p>
+
+    <div id="voice-orb" onclick="handleVoiceOrb()">🎙️</div>
+    <div id="voice-status">Tap the mic to start</div>
+
+    <div>
+      <button id="btn-start-voice" onclick="handleStartVoice()">🎙️ Start My Voice Plan</button>
+    </div>
+    <p class="voice-privacy">🔒 Mic is only active during the conversation</p>
+
+    <div id="voice-controls">
+      <button class="btn-end-call" onclick="endVoiceCall()">End Call</button>
+    </div>
+
+    <div id="voice-building">
+      <p style="margin-top:20px; color:var(--text-light); font-size:0.85rem;">Building your plan...<br>Give us about 15 seconds.</p>
+    </div>
+
+    <p class="back-to-chat" onclick="switchToChat()">← Prefer to type? Switch to chat</p>
+  </div>
+</div>
+
+<!-- QUIZ SECTION (Aime chat style) -->
+<div id="quiz-section">
+
+  <!-- Aime header -->
+  <div class="aime-header">
+    <div class="aime-avatar">🌊</div>
+    <div>
+      <div class="aime-name">Aime</div>
+      <div class="aime-role"><span class="aime-online"></span>Your PQB local concierge</div>
+    </div>
+  </div>
+
+  <div class="quiz-card">
+    <div id="quiz-progress"><div id="quiz-progress-fill" style="width:12%"></div></div>
+
+    <!-- STEP 1: Name -->
+    <div class="step active" id="step-1">
+      <div class="aime-bubble">Hi! I'm Aime — I'll build your perfect Parksville–Qualicum weekend. First, what's your name?</div>
+      <input type="text" class="name-input" id="name-input" placeholder="Your first name" autocomplete="given-name" />
+      <div class="nav-row">
+        <button class="btn-next" onclick="goNext(1)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Group -->
+    <div class="step" id="step-2">
+      <div class="aime-bubble" id="step2-bubble">Great! Who's joining you this weekend?</div>
+      <div class="option-grid">
+        <button class="option-btn" onclick="selectSingle(this,'group','solo')">
+          <span class="opt-emoji">🧍</span><span class="opt-label">Solo</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'group','couple')">
+          <span class="opt-emoji">💑</span><span class="opt-label">Couple</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'group','family')">
+          <span class="opt-emoji">👨‍👩‍👧‍👦</span><span class="opt-label">Family</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'group','friends')">
+          <span class="opt-emoji">🍻</span><span class="opt-label">Friends</span>
+        </button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goBack(2)">← Back</button>
+        <button class="btn-next" id="next-2" onclick="goNext(2)" disabled>Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Area -->
+    <div class="step" id="step-3">
+      <div class="aime-bubble">Where do you want to explore?</div>
+      <div class="option-grid">
+        <button class="option-btn" onclick="selectSingle(this,'area','parksville')">
+          <span class="opt-emoji">🏖️</span><span class="opt-label">Parksville</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'area','qualicum')">
+          <span class="opt-emoji">🌿</span><span class="opt-label">Qualicum Beach</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'area','nanoose')">
+          <span class="opt-emoji">🌊</span><span class="opt-label">Nanoose Bay</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'area','coombs')">
+          <span class="opt-emoji">🐐</span><span class="opt-label">Coombs & Errington</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'area','surprise')" style="grid-column:span 2;">
+          <span class="opt-emoji">🗺️</span><span class="opt-label">Surprise Me — Mix It Up</span>
+        </button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goBack(3)">← Back</button>
+        <button class="btn-next" id="next-3" onclick="goNext(3)" disabled>Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Vibe -->
+    <div class="step" id="step-4">
+      <div class="aime-bubble">What's the vibe?</div>
+      <p class="hint-text">Pick as many as you like</p>
+      <div class="option-grid">
+        <button class="option-btn" onclick="selectMulti(this,'vibe','outdoors')">
+          <span class="opt-emoji">🌲</span><span class="opt-label">Outdoors</span>
+        </button>
+        <button class="option-btn" onclick="selectMulti(this,'vibe','food')">
+          <span class="opt-emoji">🍽️</span><span class="opt-label">Food & Drink</span>
+        </button>
+        <button class="option-btn" onclick="selectMulti(this,'vibe','culture')">
+          <span class="opt-emoji">🏛️</span><span class="opt-label">Arts & Culture</span>
+        </button>
+        <button class="option-btn" onclick="selectMulti(this,'vibe','active')">
+          <span class="opt-emoji">🚴</span><span class="opt-label">Active</span>
+        </button>
+        <button class="option-btn" onclick="selectMulti(this,'vibe','relaxed')">
+          <span class="opt-emoji">☕</span><span class="opt-label">Relaxed</span>
+        </button>
+        <button class="option-btn" onclick="selectMulti(this,'vibe','family')">
+          <span class="opt-emoji">🎪</span><span class="opt-label">Family Fun</span>
+        </button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goBack(4)">← Back</button>
+        <button class="btn-next" id="next-4" onclick="goNext(4)" disabled>Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Budget -->
+    <div class="step" id="step-5">
+      <div class="aime-bubble">What's the budget feeling like?</div>
+      <div class="option-grid">
+        <button class="option-btn" onclick="selectSingle(this,'budget','free')">
+          <span class="opt-emoji">🎁</span><span class="opt-label">Keep It Free</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'budget','low')">
+          <span class="opt-emoji">💸</span><span class="opt-label">Under $50</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'budget','moderate')">
+          <span class="opt-emoji">🍴</span><span class="opt-label">Moderate</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'budget','treat')">
+          <span class="opt-emoji">🥂</span><span class="opt-label">Treat Ourselves</span>
+        </button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goBack(5)">← Back</button>
+        <button class="btn-next" id="next-5" onclick="goNext(5)" disabled>Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 6: Duration -->
+    <div class="step" id="step-6">
+      <div class="aime-bubble">How much of the weekend?</div>
+      <div class="option-grid single-col">
+        <button class="option-btn" onclick="selectSingle(this,'duration','hours')">
+          <span class="opt-emoji">⏱️</span><span class="opt-label">A few hours</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'duration','day')">
+          <span class="opt-emoji">☀️</span><span class="opt-label">Full day</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'duration','weekend')">
+          <span class="opt-emoji">🗓️</span><span class="opt-label">Full weekend</span>
+        </button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goBack(6)">← Back</button>
+        <button class="btn-next" id="next-6" onclick="goNext(6)" disabled>Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 7: Connection -->
+    <div class="step" id="step-7">
+      <div class="aime-bubble" id="step7-bubble">Last one — how connected are you to the area?</div>
+      <div class="option-grid single-col">
+        <button class="option-btn" onclick="selectSingle(this,'connection','local')">
+          <span class="opt-emoji">🏡</span><span class="opt-label">Local — I live here</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'connection','visitor')">
+          <span class="opt-emoji">🗺️</span><span class="opt-label">Visiting for the weekend</span>
+        </button>
+        <button class="option-btn" onclick="selectSingle(this,'connection','new')">
+          <span class="opt-emoji">📍</span><span class="opt-label">Just moved here — still discovering</span>
+        </button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goBack(7)">← Back</button>
+        <button class="btn-next" id="next-7" onclick="buildPlan()" disabled>Build My Weekend →</button>
+      </div>
+    </div>
+
+  </div><!-- /quiz-card -->
+</div><!-- /quiz-section -->
+
+<!-- BUILDING -->
 <div id="building-section">
   <div class="building-card">
     <div class="spinner"></div>
     <h2>Building your plan...</h2>
-    <p>Give us about 15 seconds.</p>
+    <p>Give us about 15 seconds. We'll scroll you down when it's ready.</p>
     <div class="build-steps">
-      <div class="build-step" id="bs-1"><span class="check"></span>Understanding your vibe</div>
-      <div class="build-step" id="bs-2"><span class="check"></span>Selecting the best local spots</div>
-      <div class="build-step" id="bs-3"><span class="check"></span>Timing your itinerary</div>
-      <div class="build-step" id="bs-4"><span class="check"></span>Adding insider tips</div>
+      <div class="build-step" id="bs-1"><span class="check"></span> ✦ Understanding your vibe</div>
+      <div class="build-step" id="bs-2"><span class="check"></span> ✦ Selecting the best local spots</div>
+      <div class="build-step" id="bs-3"><span class="check"></span> ✦ Mapping your route</div>
+      <div class="build-step" id="bs-4"><span class="check"></span> ✦ Adding insider tips</div>
     </div>
   </div>
 </div>
+
+<!-- PLAN SECTION -->
 <div id="plan-section">
-  <div class="plan-header-card"><h2 id="plan-title">Your Weekend Plan 🗺️</h2><p id="plan-subtitle">Curated for Central Vancouver Island</p></div>
-  <div id="plan-stops"></div>
-  <div class="lead-card" id="lead-card">
+  <div class="plan-header-card">
+    <h2 id="plan-title">Your Weekend Plan 🗺️</h2>
+    <p id="plan-subtitle">Curated for Central Vancouver Island</p>
+  </div>
+
+  <div class="plan-blur-wrapper">
+    <div id="plan-items"></div>
+    <div id="blur-overlay"></div>
+    <div id="countdown-badge">Save before it blurs — <span id="countdown-secs">0:30</span></div>
+  </div>
+</div>
+
+<!-- SHARE SECTION -->
+<div id="share-section">
+  <div class="share-card">
+    <p>Check out this custom Parksville–Qualicum weekend plan — get yours free in 2 minutes</p>
+    <div class="share-btns">
+      <button class="share-btn" onclick="copyPlanLink()">🔗 Copy Link</button>
+      <button class="share-btn whatsapp" onclick="shareWhatsApp()">💬 WhatsApp</button>
+    </div>
+    <div id="copy-confirm">✓ Link copied to clipboard!</div>
+  </div>
+</div>
+
+<!-- LEAD FORM SECTION -->
+<div id="lead-form-section">
+  <div class="lead-card">
     <h2>🎉 Your full plan is ready!</h2>
-    <p class="sub">Drop your details and we'll send it straight to your phone.</p>
-    <input type="text" class="lead-input" id="lead-name" placeholder="Your name" />
+    <p class="sub">Drop your details and we'll send it straight to your phone — maps, tips, and everything you need.</p>
+    <div class="lead-row">
+      <input type="text" class="lead-input" id="lead-first" placeholder="First name" style="margin-bottom:0;" />
+      <input type="text" class="lead-input" id="lead-last" placeholder="Last name" style="margin-bottom:0;" />
+    </div>
     <input type="email" class="lead-input" id="lead-email" placeholder="Email address" />
     <input type="tel" class="lead-input" id="lead-phone" placeholder="Phone number (optional)" />
-    <p class="consent-text">I agree to receive my weekend plan and occasional local tips from Hans Suhr. Unsubscribe anytime.</p>
-    <button class="btn-claim" onclick="claimPlan()">Claim My Weekend Plan 🗺️</button>
+    <div id="opt-in-row">
+      <input type="checkbox" id="opt-in-cb" />
+      <label class="opt-in-label" for="opt-in-cb">
+        I agree to receive my weekend plan and occasional local tips from Hans Suhr.
+        <a href="/unsubscribe">Unsubscribe</a> at any time. <a href="/privacy">Privacy Policy</a>
+      </label>
+    </div>
+    <div id="form-error">Please fill in your name and email to continue.</div>
+    <button id="btn-claim" onclick="claimPlan()">Claim My Weekend Plan 🗺️</button>
   </div>
-  <div class="success-card" id="success-card">
-    <div style="font-size:3rem">🎉</div>
+</div>
+
+<!-- SUCCESS STATE -->
+<div id="success-state">
+  <div class="success-card">
+    <div class="big-emoji">🎉</div>
     <h2>You're all set — have an amazing weekend!</h2>
-    <p>Your full plan is above. Hans will make sure you're set up with everything you need.</p>
+    <p>Your full plan is revealed above. We've sent a copy to your email so you're good to go.</p>
     <button class="btn-restart" onclick="restartQuiz()">Plan a Different Weekend</button>
   </div>
 </div>
+
+<!-- FOOTER -->
 <footer class="site-footer">
-  <div class="agent-name">Curated by Hans Suhr, REALTOR®</div>
-  <div class="agent-detail">RE/MAX Anchor Realty · Parksville · Qualicum Beach · Nanoose Bay</div>
-  <div class="agent-detail">Central Vancouver Island's trusted local expert</div>
-  <div class="agent-links"><a href="https://hanssuhr.ca" target="_blank">hanssuhr.ca</a> · <a href="mailto:hans@hanssuhr.ca">hans@hanssuhr.ca</a></div>
+  <div class="remax-badge">RE/MAX</div>
+  <div class="agent-name">Hans Suhr, REALTOR®</div>
+  <div class="agent-detail">RE/MAX Anchor Realty · Parksville, Qualicum Beach, Nanoose Bay specialist</div>
+  <div class="agent-links">
+    <a href="https://hanssuhr.ca" target="_blank">hanssuhr.ca</a>
+    <a href="mailto:hans@hanssuhr.ca">hans@hanssuhr.ca</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/unsubscribe">Unsubscribe</a>
+  </div>
   <div class="copyright">© 2026 Parksville-Qualicum Beach Local Guides. All rights reserved.</div>
 </footer>
+
 <script>
-const answers = { name:'', group:'', area:'', vibe:[], budget:'', duration:'', connection:'' };
+// ──────────────────────────────────────────────────────────
+// STATE
+// ──────────────────────────────────────────────────────────
+const answers = {
+  name: '', group: '', area: '',
+  vibe: [], budget: '', duration: '', connection: ''
+};
 let currentStep = 1;
 const TOTAL_STEPS = 7;
+let countdownTimer = null;
+
+// ──────────────────────────────────────────────────────────
+// MODE SELECTION
+// ──────────────────────────────────────────────────────────
+function startVoice() {
+  document.getElementById('mode-picker').style.display = 'none';
+  document.getElementById('voice-section').classList.add('visible');
+  document.getElementById('voice-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function startChat() {
+  document.getElementById('mode-picker').style.display = 'none';
+  document.getElementById('quiz-section').classList.add('visible');
+  document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function switchToChat() {
+  document.getElementById('voice-section').classList.remove('visible');
+  document.getElementById('quiz-section').classList.add('visible');
+  document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ──────────────────────────────────────────────────────────
+// VOICE SECTION (placeholder — voice AI coming soon)
+// ──────────────────────────────────────────────────────────
+function handleVoiceOrb() {
+  handleStartVoice();
+}
+
+function handleStartVoice() {
+  // Voice AI not yet connected — offer to switch to chat
+  const status = document.getElementById('voice-status');
+  status.textContent = 'Voice planning coming soon — switching you to chat...';
+  setTimeout(() => switchToChat(), 1800);
+}
+
+function endVoiceCall() {
+  document.getElementById('voice-controls').classList.remove('visible');
+  document.getElementById('voice-orb').classList.remove('listening');
+  document.getElementById('voice-status').textContent = 'Call ended.';
+}
+
+// ──────────────────────────────────────────────────────────
+// SPOTS DATABASE
+// ──────────────────────────────────────────────────────────
 const spots = [
-  { emoji:'🏖️', name:'Rathtrevor Beach Provincial Park', area:['parksville','surprise'], vibe:['outdoors','family','active','relaxed'], budget:['free','low','moderate','treat'], timeSlot:'morning', time:'10:00 AM', price:'Free', location:'Parksville', tip:"One of BC's warmest swimming beaches. The tide goes out nearly a kilometre at low tide — perfect for families and long walks." },
-  { emoji:'🌊', name:'Englishman River Falls Provincial Park', area:['parksville','surprise'], vibe:['outdoors','active','family'], budget:['free','low','moderate','treat'], timeSlot:'morning', time:'9:30 AM', price:'Free', location:'Errington (20 min from Parksville)', tip:'Two stunning waterfall drops connected by a forest trail. Allow 90 minutes. Wear proper shoes.' },
-  { emoji:'💧', name:'Little Qualicum Falls Provincial Park', area:['qualicum','coombs','surprise'], vibe:['outdoors','active','family'], budget:['free','low','moderate','treat'], timeSlot:'morning', time:'10:00 AM', price:'Free', location:'Qualicum (30 min from town)', tip:'A series of cascading falls on the Little Qualicum River. Less crowded than Englishman River.' },
-  { emoji:'🌿', name:'Milner Gardens & Woodland', area:['qualicum','surprise'], vibe:['outdoors','relaxed','culture'], budget:['low','moderate','treat'], timeSlot:'morning', time:'10:00 AM', price:'$$', location:'Qualicum Beach', tip:"60 acres of old-growth forest, championship rhododendrons, and ocean views. One of Vancouver Island's hidden gems." },
-  { emoji:'🌸', name:'Mount Arrowsmith Rhododendron Trail', area:['parksville','qualicum','surprise'], vibe:['outdoors','active'], budget:['free','low','moderate','treat'], timeSlot:'morning', time:'8:30 AM', price:'Free', location:'Cathedral Grove area', tip:'Wild rhododendrons bloom spectacularly in late May–June. Go early, bring layers.' },
-  { emoji:'🌳', name:'MacMillan Provincial Park (Cathedral Grove)', area:['qualicum','coombs','surprise'], vibe:['outdoors','family','relaxed'], budget:['free','low','moderate','treat'], timeSlot:'morning', time:'9:00 AM', price:'Free', location:'Port Alberni Highway (Hwy 4)', tip:'800-year-old Douglas firs that make you feel genuinely small. A short loop trail — 20 minutes — but it stays with you.' },
-  { emoji:'🛶', name:'Nanoose Bay Paddleboarding & Kayaking', area:['nanoose','surprise'], vibe:['outdoors','active'], budget:['low','moderate','treat'], timeSlot:'morning', time:'10:00 AM', price:'$$', location:'Nanoose Bay', tip:'Calm protected waters. The bay wildlife — herons, seals, and the odd eagle — makes it worth it even if you fall in.' },
-  { emoji:'⛳', name:'Morningstar Golf Club', area:['parksville','surprise'], vibe:['active','relaxed'], budget:['moderate','treat'], timeSlot:'morning', time:'8:00 AM', price:'$$$', location:'Parksville', tip:"One of Vancouver Island's top public-access courses. Book a tee time in advance on weekends." },
-  { emoji:'☕', name:'Heritage Coffee', area:['qualicum','surprise'], vibe:['food','relaxed'], budget:['free','low','moderate','treat'], timeSlot:'morning', time:'9:00 AM', price:'$', location:'Qualicum Beach Village', tip:'The village coffee institution. Flat white and a pastry on the patio — the right way to start a Qualicum morning.' },
-  { emoji:'🥞', name:'Kalvas Restaurant', area:['parksville','surprise'], vibe:['food','family','relaxed'], budget:['low','moderate'], timeSlot:'morning', time:'8:30 AM', price:'$', location:'Parksville', tip:'A Parksville institution. Massive portions, zero pretension. The coffee is always hot.' },
-  { emoji:'🌮', name:"Lefty's Fresh Mexican", area:['parksville','surprise'], vibe:['food','family'], budget:['low','moderate'], timeSlot:'lunch', time:'12:00 PM', price:'$$', location:'Parksville', tip:'Fast-casual Mexican done right. Fresh ingredients, generous portions.' },
-  { emoji:'🍷', name:'Bistro 694', area:['qualicum','surprise'], vibe:['food','relaxed'], budget:['moderate','treat'], timeSlot:'lunch', time:'12:00 PM', price:'$$$', location:'Qualicum Beach', tip:'The best seat on the main drag for a long lunch. Seasonal menu, local ingredients. Book ahead on weekends.' },
-  { emoji:'🐟', name:'Sea Shanty Fish & Chips', area:['parksville','nanoose','surprise'], vibe:['food','family','relaxed'], budget:['low','moderate'], timeSlot:'lunch', time:'12:30 PM', price:'$$', location:'Parksville', tip:'Proper BC fish and chips near the waterfront. Halibut is the call.' },
-  { emoji:'🍕', name:'Shady Rest Waterfront Bar & Grill', area:['parksville','nanoose','surprise'], vibe:['food','relaxed'], budget:['moderate','treat'], timeSlot:'dinner', time:'6:00 PM', price:'$$', location:'Lantzville (near Nanoose)', tip:'A proper waterfront pub with one of the best patios on the Island. Needs verification — call ahead.' },
-  { emoji:'🐐', name:'Coombs Old Country Market', area:['coombs','qualicum','parksville','surprise'], vibe:['food','family','culture','relaxed'], budget:['free','low','moderate','treat'], timeSlot:'midday', time:'1:00 PM', price:'$', location:'Coombs', tip:'The goats on the sod roof are real. The market is genuinely great — local produce, artisan food, bakery, ice cream, quirky shops.' },
-  { emoji:'🦋', name:'Butterfly World & Gardens', area:['coombs','surprise'], vibe:['family','culture','relaxed','outdoors'], budget:['low','moderate'], timeSlot:'midday', time:'2:00 PM', price:'$$', location:'Coombs', tip:'Tropical butterflies flying freely in a glass conservatory. Kids love it — so do adults.' },
-  { emoji:'🎪', name:'Parksville Community Park & Craft Market', area:['parksville','surprise'], vibe:['family','relaxed','culture'], budget:['free','low','moderate'], timeSlot:'midday', time:'11:00 AM', price:'Free', location:'Parksville', tip:'The heart of Parksville on a summer weekend. Beach access, playground, bandshell, and craft market.' },
-  { emoji:'🧵', name:'Qualicum Beach Village Shops', area:['qualicum','surprise'], vibe:['relaxed','culture','food'], budget:['low','moderate','treat'], timeSlot:'midday', time:'2:00 PM', price:'$', location:'Qualicum Beach', tip:'Independent galleries, bookshops, clothing boutiques. Qualicum has managed to keep its character — rare for a beach town.' },
-  { emoji:'🌾', name:'Arrowsmith Farmers Market', area:['parksville','qualicum','surprise'], vibe:['food','relaxed','culture','family'], budget:['free','low','moderate'], timeSlot:'morning', time:'9:30 AM', price:'Free', location:'Parksville (Saturday mornings, seasonal)', tip:'Local vendors, fresh produce, baked goods. The right Saturday morning start.' },
-  { emoji:'🌅', name:'Beachcomber Regional Park', area:['nanoose','surprise'], vibe:['outdoors','relaxed','active'], budget:['free','low','moderate','treat'], timeSlot:'afternoon', time:'3:00 PM', price:'Free', location:'Nanoose Bay', tip:'A quiet park on Nanoose Bay with good shoreline access. Go at low tide for the tidepools.' },
-  { emoji:'🦅', name:'Notch Hill Trail', area:['nanoose','surprise'], vibe:['outdoors','active'], budget:['free','low','moderate','treat'], timeSlot:'morning', time:'9:00 AM', price:'Free', location:'Nanoose Bay', tip:'Views over the Georgia Strait and Mount Arrowsmith. Eagles are a common sighting. 90 minutes round-trip.' },
-  { emoji:'🌇', name:'Sunset Walk on Qualicum Beach', area:['qualicum','parksville','nanoose','surprise'], vibe:['relaxed','outdoors','family'], budget:['free','low','moderate','treat'], timeSlot:'evening', time:'7:30 PM', price:'Free', location:'Qualicum Beach', tip:"The sunsets on this stretch of coast are legitimately spectacular. If you're here for the weekend, don't miss this." },
-  { emoji:'🍦', name:'Ice Cream at the Qualicum Beach Boardwalk', area:['qualicum','parksville','surprise'], vibe:['relaxed','family','food'], budget:['free','low','moderate','treat'], timeSlot:'afternoon', time:'3:30 PM', price:'$', location:'Qualicum Beach', tip:'The classic end to a beach day. On a warm day there is nowhere better to be on the Island.' }
+  // OUTDOORS / FREE
+  {
+    emoji: '🏖️', name: 'Rathtrevor Beach Provincial Park',
+    area: ['parksville','surprise'], vibe: ['outdoors','family','active','relaxed'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'morning', time: '10:00 AM', price: 'Free',
+    location: 'Parksville',
+    tip: "One of BC's warmest swimming beaches. The tide goes out nearly a kilometre at low tide — perfect for families and long walks. Check the tide table before you go."
+  },
+  {
+    emoji: '🌊', name: 'Englishman River Falls Provincial Park',
+    area: ['parksville','surprise'], vibe: ['outdoors','active','family'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'morning', time: '9:30 AM', price: 'Free',
+    location: 'Errington (20 min from Parksville)',
+    tip: 'Two stunning waterfall drops connected by a forest trail. Upper falls first, then lower — allow 90 minutes. Wear proper shoes; it gets slippery near the water.'
+  },
+  {
+    emoji: '💧', name: 'Little Qualicum Falls Provincial Park',
+    area: ['qualicum','coombs','surprise'], vibe: ['outdoors','active','family'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'morning', time: '10:00 AM', price: 'Free',
+    location: 'Qualicum (30 min from town)',
+    tip: 'A series of cascading falls on the Little Qualicum River. Less crowded than Englishman River. The upper trail through old-growth forest is worth the extra 20 minutes.'
+  },
+  {
+    emoji: '🌿', name: 'Milner Gardens & Woodland',
+    area: ['qualicum','surprise'], vibe: ['outdoors','relaxed','culture'],
+    budget: ['low','moderate','treat'], timeSlot: 'morning', time: '10:00 AM', price: '$$',
+    location: 'Qualicum Beach',
+    tip: "60 acres of old-growth forest, championship rhododendrons, and ocean views. One of Vancouver Island's hidden gems — quieter than it deserves to be."
+  },
+  {
+    emoji: '🌳', name: 'MacMillan Provincial Park (Cathedral Grove)',
+    area: ['qualicum','coombs','surprise'], vibe: ['outdoors','family','relaxed'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'morning', time: '9:00 AM', price: 'Free',
+    location: 'Port Alberni Highway (Hwy 4)',
+    tip: "800-year-old Douglas firs that make you feel genuinely small. A short loop trail — 20 minutes — but it stays with you. Go on a weekday morning to beat the crowds."
+  },
+  {
+    emoji: '🛶', name: 'Nanoose Bay Paddleboarding & Kayaking',
+    area: ['nanoose','surprise'], vibe: ['outdoors','active'],
+    budget: ['low','moderate','treat'], timeSlot: 'morning', time: '10:00 AM', price: '$$',
+    location: 'Nanoose Bay',
+    tip: 'Calm protected waters make Nanoose Bay ideal for paddleboarding. Rentals available locally. The bay wildlife — herons, seals, and the odd eagle — makes it worth it even if you fall in.'
+  },
+  {
+    emoji: '⛳', name: 'Morningstar Golf Club',
+    area: ['parksville','surprise'], vibe: ['active','relaxed'],
+    budget: ['moderate','treat'], timeSlot: 'morning', time: '8:00 AM', price: '$$$',
+    location: 'Parksville',
+    tip: "One of Vancouver Island's top public-access courses. Book a tee time in advance on weekends. The back nine has some memorable ocean views."
+  },
+  {
+    emoji: '🌸', name: 'Mount Arrowsmith Rhododendron Trail',
+    area: ['parksville','qualicum','surprise'], vibe: ['outdoors','active'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'morning', time: '8:30 AM', price: 'Free',
+    location: 'Cathedral Grove / Horne Lake area',
+    tip: 'Wild rhododendrons bloom spectacularly in late May–June. A proper hike — go early, bring layers. The viewpoints on a clear day are worth every step.'
+  },
+  // FOOD & DRINK
+  {
+    emoji: '☕', name: 'Heritage Coffee',
+    area: ['qualicum','surprise'], vibe: ['food','relaxed'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'morning', time: '9:00 AM', price: '$',
+    location: 'Qualicum Beach Village',
+    tip: 'The village coffee institution. Flat white and a pastry on the patio — the right way to start a Qualicum morning. Gets busy by 10 on weekends.'
+  },
+  {
+    emoji: '🥞', name: 'Kalvas Restaurant',
+    area: ['parksville','surprise'], vibe: ['food','family','relaxed'],
+    budget: ['low','moderate'], timeSlot: 'morning', time: '8:30 AM', price: '$',
+    location: 'Parksville',
+    tip: 'A Parksville institution going back decades. Massive portions, zero pretension. The kind of breakfast place where the coffee is always hot and the server knows half the room.'
+  },
+  {
+    emoji: '🌮', name: "Lefty's Fresh Mexican",
+    area: ['parksville','surprise'], vibe: ['food','family'],
+    budget: ['low','moderate'], timeSlot: 'lunch', time: '12:00 PM', price: '$$',
+    location: 'Parksville',
+    tip: 'Fast-casual Mexican done right. Fresh ingredients, generous portions, and prices that make sense. The burritos are properly loaded.'
+  },
+  {
+    emoji: '🍷', name: 'Bistro 694',
+    area: ['qualicum','surprise'], vibe: ['food','relaxed'],
+    budget: ['moderate','treat'], timeSlot: 'lunch', time: '12:00 PM', price: '$$$',
+    location: 'Qualicum Beach',
+    tip: 'The best seat on the main drag for a long lunch. Seasonal menu, local ingredients, and a wine list that respects the food. Book ahead on weekends.'
+  },
+  {
+    emoji: '🐟', name: 'Sea Shanty Fish & Chips',
+    area: ['parksville','nanoose','surprise'], vibe: ['food','family','relaxed'],
+    budget: ['low','moderate'], timeSlot: 'lunch', time: '12:30 PM', price: '$$',
+    location: 'Parksville',
+    tip: "Proper BC fish and chips near the waterfront. Halibut is the call. Eat outside if the weather holds — there's no view that goes better with battered fish than a Pacific bay."
+  },
+  {
+    emoji: '🍕', name: 'Shady Rest Waterfront Bar & Grill',
+    area: ['parksville','nanoose','surprise'], vibe: ['food','relaxed'],
+    budget: ['moderate','treat'], timeSlot: 'dinner', time: '6:00 PM', price: '$$',
+    location: 'Lantzville (near Nanoose)',
+    tip: 'A proper waterfront pub with one of the best patios on the Island. Cold beer, good burgers, and the kind of ocean view that makes you forget what time it is.'
+  },
+  // CULTURE / SHOPPING
+  {
+    emoji: '🐐', name: 'Coombs Old Country Market',
+    area: ['coombs','qualicum','parksville','surprise'], vibe: ['food','family','culture','relaxed'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'midday', time: '1:00 PM', price: '$',
+    location: 'Coombs',
+    tip: 'The goats on the sod roof are real, and yes, they are the whole point. But the market itself is genuinely great — local produce, artisan food, bakery, ice cream, quirky shops. A must for visitors.'
+  },
+  {
+    emoji: '🦋', name: 'Butterfly World & Gardens',
+    area: ['coombs','surprise'], vibe: ['family','culture','relaxed','outdoors'],
+    budget: ['low','moderate'], timeSlot: 'midday', time: '2:00 PM', price: '$$',
+    location: 'Coombs',
+    tip: 'Tropical butterflies flying freely around you in a glass conservatory. Better than it sounds. Kids love it — but so do adults. An easy hour that surprises everyone.'
+  },
+  {
+    emoji: '🎪', name: 'Parksville Community Park & Craft Market',
+    area: ['parksville','surprise'], vibe: ['family','relaxed','culture'],
+    budget: ['free','low','moderate'], timeSlot: 'midday', time: '11:00 AM', price: 'Free',
+    location: 'Parksville',
+    tip: 'The heart of Parksville on a summer weekend. Beach access, playground, bandshell, and a great craft market when it runs. Grab an ice cream and wander.'
+  },
+  {
+    emoji: '🧵', name: 'Qualicum Beach Village Shops',
+    area: ['qualicum','surprise'], vibe: ['relaxed','culture','food'],
+    budget: ['low','moderate','treat'], timeSlot: 'midday', time: '2:00 PM', price: '$',
+    location: 'Qualicum Beach',
+    tip: 'The main street is genuinely worth an hour. Independent galleries, bookshops, clothing boutiques, and a few good coffee stops. Qualicum has managed to keep its character — rare for a beach town.'
+  },
+  {
+    emoji: '🌾', name: 'Arrowsmith Farmers Market',
+    area: ['parksville','qualicum','surprise'], vibe: ['food','relaxed','culture','family'],
+    budget: ['free','low','moderate'], timeSlot: 'morning', time: '9:30 AM', price: 'Free',
+    location: 'Parksville (Saturday mornings, seasonal)',
+    tip: "Local vendors, fresh produce, baked goods, and the occasional excellent artisan food find. The right Saturday morning start if you're staying the weekend."
+  },
+  // NANOOSE
+  {
+    emoji: '🌅', name: 'Beachcomber Regional Park',
+    area: ['nanoose','surprise'], vibe: ['outdoors','relaxed','active'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'afternoon', time: '3:00 PM', price: 'Free',
+    location: 'Nanoose Bay',
+    tip: 'A quiet, less-visited park on Nanoose Bay with good shoreline access, walking trails, and genuinely peaceful energy. Bring a book and a blanket. Go at low tide for the tidepools.'
+  },
+  {
+    emoji: '🦅', name: 'Notch Hill Trail',
+    area: ['nanoose','surprise'], vibe: ['outdoors','active'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'morning', time: '9:00 AM', price: 'Free',
+    location: 'Nanoose Bay',
+    tip: 'A moderate hike with payoff views over the Georgia Strait and Mount Arrowsmith. Eagles are a common sighting. About 90 minutes round-trip — well worth the effort.'
+  },
+  // EVENING
+  {
+    emoji: '🌇', name: 'Sunset Walk on Qualicum Beach',
+    area: ['qualicum','parksville','nanoose','surprise'], vibe: ['relaxed','outdoors','family'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'evening', time: '7:30 PM', price: 'Free',
+    location: 'Qualicum Beach',
+    tip: "The sunsets on this stretch of coast are legitimately spectacular. Walk the beachfront as the light changes. If you're here for the weekend, don't miss this."
+  },
+  {
+    emoji: '🍦', name: 'Ice Cream at the Qualicum Beach Boardwalk',
+    area: ['qualicum','parksville','surprise'], vibe: ['relaxed','family','food'],
+    budget: ['free','low','moderate','treat'], timeSlot: 'afternoon', time: '3:30 PM', price: '$',
+    location: 'Qualicum Beach',
+    tip: 'The classic end to a beach day. Soft-serve or scoop, the boardwalk is a good people-watching spot. On a warm day there is nowhere better to be on the Island.'
+  }
 ];
-function startQuiz() { document.getElementById('quiz-section').classList.add('visible'); document.getElementById('quiz-section').scrollIntoView({behavior:'smooth',block:'start'}); }
-function updateProgress(step) { document.getElementById('progress-fill').style.width = Math.round((step/TOTAL_STEPS)*100)+'%'; }
-function showStep(n) { document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('step-'+n).classList.add('active'); updateProgress(n); currentStep=n; }
-function goNext(from) { if(from===1){const name=document.getElementById('name-input').value.trim();if(!name){document.getElementById('name-input').focus();return;}answers.name=name;document.getElementById('step2-title').textContent='Who\'s joining you, '+name+'?';document.getElementById('step7-title').textContent='How connected are you to the area, '+name+'?';}showStep(from+1);document.getElementById('quiz-section').scrollIntoView({behavior:'smooth',block:'start'}); }
-function goBack(from) { showStep(from-1); document.getElementById('quiz-section').scrollIntoView({behavior:'smooth',block:'start'}); }
-function selectSingle(btn,key,val) { btn.closest('.option-grid').querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');answers[key]=val;const stepMap={group:2,area:3,budget:5,duration:6,connection:7};const nextBtn=document.getElementById('next-'+stepMap[key]);if(nextBtn)nextBtn.disabled=false;setTimeout(()=>{if(nextBtn&&!nextBtn.disabled)nextBtn.click();},300); }
-function selectMulti(btn,key,val) { btn.classList.toggle('selected');if(btn.classList.contains('selected')){if(!answers[key].includes(val))answers[key].push(val);}else{answers[key]=answers[key].filter(v=>v!==val);}const nextBtn=document.getElementById('next-4');if(nextBtn)nextBtn.disabled=answers.vibe.length===0; }
-document.getElementById('name-input').addEventListener('keydown',function(e){if(e.key==='Enter'&&this.value.trim())goNext(1);});
-function buildPlan() { document.getElementById('quiz-section').classList.remove('visible');document.getElementById('building-section').classList.add('visible');document.getElementById('building-section').scrollIntoView({behavior:'smooth',block:'start'});['bs-1','bs-2','bs-3','bs-4'].forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('done'),(i+1)*900));setTimeout(()=>{document.getElementById('building-section').classList.remove('visible');renderPlan();document.getElementById('plan-section').classList.add('visible');document.getElementById('plan-section').scrollIntoView({behavior:'smooth',block:'start'});},4200); }
-function selectSpots() { const{area,vibe,budget,duration}=answers;let filtered=spots.filter(s=>(s.area.includes(area)||area==='surprise')&&(vibe.length===0||s.vibe.some(v=>vibe.includes(v)))&&s.budget.includes(budget));if(filtered.length<4)filtered=spots.filter(s=>(s.area.includes(area)||area==='surprise')&&s.budget.includes(budget));if(filtered.length<4)filtered=spots.filter(s=>s.budget.includes(budget)||budget==='free');filtered.sort(()=>Math.random()-0.5);const count=duration==='hours'?3:duration==='day'?5:7;const selected=[];const slotOrder=['morning','midday','lunch','afternoon','dinner','evening'];for(const slot of slotOrder){if(selected.length>=count)break;const match=filtered.find(s=>s.timeSlot===slot&&!selected.includes(s));if(match)selected.push(match);}for(const s of filtered){if(selected.length>=count)break;if(!selected.includes(s))selected.push(s);}return selected.slice(0,count); }
-function renderPlan() { const{name,area,group}=answers;const areaLabels={parksville:'Parksville',qualicum:'Qualicum Beach',nanoose:'Nanoose Bay',coombs:'Coombs & Errington',surprise:'Central Vancouver Island'};const groupLabels={solo:'a solo explorer',couple:'a couple',family:'the family',friends:'you and your crew'};document.getElementById('plan-title').textContent=name+"'s Weekend Plan 🗺️";document.getElementById('plan-subtitle').textContent='Curated for '+(groupLabels[group]||'you')+' · '+(areaLabels[area]||'Central Vancouver Island');const selected=selectSpots();const container=document.getElementById('plan-stops');container.innerHTML='';selected.forEach(spot=>{const el=document.createElement('div');el.className='plan-stop';el.innerHTML='<div class="stop-emoji">'+spot.emoji+'</div><div class="stop-info"><h3>'+spot.name+'</h3><div class="stop-meta"><span>📍 '+spot.location+'</span><span>⏰ '+spot.time+'</span><span>'+spot.price+'</span></div><p>'+spot.tip+'</p></div>';container.appendChild(el);});document.getElementById('lead-name').value=name; }
-async function claimPlan() { const lname=document.getElementById('lead-name').value.trim();const lemail=document.getElementById('lead-email').value.trim();const lphone=document.getElementById('lead-phone').value.trim();if(!lname||!lemail){alert('Please enter your name and email.');return;}const btn=document.querySelector('.btn-claim');btn.textContent='Sending your plan…';btn.disabled=true;try{await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:lname,email:lemail,phone:lphone,area:answers.area,group:answers.group,vibe:answers.vibe.join(', '),budget:answers.budget,duration:answers.duration,connection:answers.connection})});}catch(e){console.warn(e);}document.getElementById('lead-card').style.display='none';document.getElementById('success-card').classList.add('visible');document.getElementById('success-card').scrollIntoView({behavior:'smooth',block:'start'}); }
-function restartQuiz() { answers.name='';answers.group='';answers.area='';answers.vibe=[];answers.budget='';answers.duration='';answers.connection='';document.getElementById('name-input').value='';document.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));document.querySelectorAll('.btn-next').forEach(b=>{if(b.id!=='next-1')b.disabled=true;});document.getElementById('lead-card').style.display='';document.getElementById('success-card').classList.remove('visible');document.getElementById('plan-section').classList.remove('visible');document.getElementById('plan-stops').innerHTML='';showStep(1);document.getElementById('quiz-section').classList.add('visible');document.getElementById('quiz-section').scrollIntoView({behavior:'smooth',block:'start'}); }
+
+// ──────────────────────────────────────────────────────────
+// QUIZ NAVIGATION
+// ──────────────────────────────────────────────────────────
+function updateProgress(step) {
+  const pct = Math.round((step / TOTAL_STEPS) * 100);
+  document.getElementById('quiz-progress-fill').style.width = pct + '%';
+}
+
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-' + n).classList.add('active');
+  updateProgress(n);
+  currentStep = n;
+}
+
+function goNext(from) {
+  if (from === 1) {
+    const name = document.getElementById('name-input').value.trim();
+    if (!name) { document.getElementById('name-input').focus(); return; }
+    answers.name = name;
+    document.getElementById('step2-bubble').textContent = `Great! Who's joining you, ${name}?`;
+    document.getElementById('step7-bubble').textContent = `Last one — how connected are you to the area, ${name}?`;
+  }
+  showStep(from + 1);
+  document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function goBack(from) {
+  showStep(from - 1);
+  document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function selectSingle(btn, key, val) {
+  const parent = btn.closest('.option-grid');
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[key] = val;
+  const stepMap = { group: 2, area: 3, budget: 5, duration: 6, connection: 7 };
+  const nextBtn = document.getElementById('next-' + stepMap[key]);
+  if (nextBtn) nextBtn.disabled = false;
+  setTimeout(() => { if (nextBtn && !nextBtn.disabled) nextBtn.click(); }, 300);
+}
+
+function selectMulti(btn, key, val) {
+  btn.classList.toggle('selected');
+  if (btn.classList.contains('selected')) {
+    if (!answers[key].includes(val)) answers[key].push(val);
+  } else {
+    answers[key] = answers[key].filter(v => v !== val);
+  }
+  const nextBtn = document.getElementById('next-4');
+  if (nextBtn) nextBtn.disabled = answers.vibe.length === 0;
+}
+
+document.getElementById('name-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && this.value.trim()) goNext(1);
+});
+
+// ──────────────────────────────────────────────────────────
+// PLAN GENERATION
+// ──────────────────────────────────────────────────────────
+function buildPlan() {
+  document.getElementById('quiz-section').classList.remove('visible');
+  document.getElementById('building-section').classList.add('visible');
+  document.getElementById('building-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const steps = ['bs-1','bs-2','bs-3','bs-4'];
+  steps.forEach((id, i) => {
+    setTimeout(() => { document.getElementById(id).classList.add('done'); }, (i + 1) * 900);
+  });
+
+  setTimeout(() => {
+    document.getElementById('building-section').classList.remove('visible');
+    renderPlan();
+    document.getElementById('plan-section').classList.add('visible');
+    document.getElementById('share-section').classList.add('visible');
+    document.getElementById('lead-form-section').classList.add('visible');
+    document.getElementById('plan-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    startCountdown();
+  }, 4200);
+}
+
+function selectSpots() {
+  const { area, vibe, budget, duration } = answers;
+  let filtered = spots.filter(s => {
+    const areaMatch = s.area.includes(area) || area === 'surprise';
+    const vibeMatch = vibe.length === 0 || s.vibe.some(v => vibe.includes(v));
+    const budgetMatch = s.budget.includes(budget);
+    return areaMatch && vibeMatch && budgetMatch;
+  });
+  if (filtered.length < 4) {
+    filtered = spots.filter(s => (s.area.includes(area) || area === 'surprise') && s.budget.includes(budget));
+  }
+  if (filtered.length < 4) {
+    filtered = spots.filter(s => s.budget.includes(budget) || budget === 'free');
+  }
+  filtered.sort(() => Math.random() - 0.5);
+  const count = duration === 'hours' ? 3 : duration === 'day' ? 5 : 7;
+  const slotOrder = ['morning','midday','lunch','afternoon','dinner','evening'];
+  const selected = [];
+  for (const slot of slotOrder) {
+    if (selected.length >= count) break;
+    const match = filtered.find(s => s.timeSlot === slot && !selected.includes(s));
+    if (match) selected.push(match);
+  }
+  for (const s of filtered) {
+    if (selected.length >= count) break;
+    if (!selected.includes(s)) selected.push(s);
+  }
+  return selected.slice(0, count);
+}
+
+function renderPlan() {
+  const { name, area, group } = answers;
+  const areaLabels = {
+    parksville: 'Parksville', qualicum: 'Qualicum Beach',
+    nanoose: 'Nanoose Bay', coombs: 'Coombs & Errington', surprise: 'Central Vancouver Island'
+  };
+  const groupLabels = { solo: 'a solo explorer', couple: 'a couple', family: 'the family', friends: 'you and your crew' };
+
+  document.getElementById('plan-title').textContent = `${name}'s Weekend Plan 🗺️`;
+  document.getElementById('plan-subtitle').textContent =
+    `Curated for ${groupLabels[group] || 'you'} · ${areaLabels[area] || 'Central Vancouver Island'}`;
+
+  const selected = selectSpots();
+  const container = document.getElementById('plan-items');
+  container.innerHTML = '';
+
+  selected.forEach(spot => {
+    const el = document.createElement('div');
+    el.className = 'plan-stop';
+    el.innerHTML = `
+      <div class="stop-emoji">${spot.emoji}</div>
+      <div class="stop-info">
+        <h3>${spot.name}</h3>
+        <div class="stop-meta">
+          <span>📍 ${spot.location}</span>
+          <span>⏰ ${spot.time}</span>
+          <span>${spot.price}</span>
+        </div>
+        <p>${spot.tip}</p>
+      </div>
+    `;
+    container.appendChild(el);
+  });
+
+  // Pre-fill first name in lead form
+  document.getElementById('lead-first').value = answers.name;
+}
+
+// ──────────────────────────────────────────────────────────
+// COUNTDOWN
+// ──────────────────────────────────────────────────────────
+function startCountdown() {
+  let secs = 30;
+  const secsEl = document.getElementById('countdown-secs');
+  const badge = document.getElementById('countdown-badge');
+  const overlay = document.getElementById('blur-overlay');
+
+  countdownTimer = setInterval(() => {
+    secs--;
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    secsEl.textContent = m + ':' + String(s).padStart(2, '0');
+    if (secs <= 0) {
+      clearInterval(countdownTimer);
+      badge.classList.add('hidden');
+      overlay.classList.add('hidden');
+    }
+  }, 1000);
+}
+
+// ──────────────────────────────────────────────────────────
+// SHARE
+// ──────────────────────────────────────────────────────────
+function copyPlanLink() {
+  const url = window.location.origin + window.location.pathname;
+  navigator.clipboard.writeText(url).then(() => {
+    const confirm = document.getElementById('copy-confirm');
+    confirm.classList.add('visible');
+    setTimeout(() => confirm.classList.remove('visible'), 3000);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = url;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+
+function shareWhatsApp() {
+  const msg = encodeURIComponent("Check out this custom Parksville–Qualicum weekend plan — get yours free in 2 minutes: " + window.location.origin);
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
+
+// ──────────────────────────────────────────────────────────
+// LEAD CAPTURE
+// ──────────────────────────────────────────────────────────
+async function claimPlan() {
+  const first = document.getElementById('lead-first').value.trim();
+  const last  = document.getElementById('lead-last').value.trim();
+  const email = document.getElementById('lead-email').value.trim();
+  const phone = document.getElementById('lead-phone').value.trim();
+  const optIn = document.getElementById('opt-in-cb').checked;
+  const errEl = document.getElementById('form-error');
+
+  if (!first || !email) {
+    errEl.textContent = 'Please enter your name and email to continue.';
+    errEl.classList.add('visible');
+    return;
+  }
+  errEl.classList.remove('visible');
+
+  // Remove blur/countdown when plan is claimed
+  document.getElementById('blur-overlay').classList.add('hidden');
+  document.getElementById('countdown-badge').classList.add('hidden');
+  if (countdownTimer) clearInterval(countdownTimer);
+
+  const btn = document.getElementById('btn-claim');
+  btn.textContent = 'Sending your plan…';
+  btn.disabled = true;
+
+  try {
+    const payload = {
+      name: first + (last ? ' ' + last : ''),
+      email, phone,
+      area: answers.area,
+      group: answers.group,
+      vibe: answers.vibe.join(', '),
+      budget: answers.budget,
+      duration: answers.duration,
+      connection: answers.connection
+    };
+    await fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) {
+    console.warn('Lead submission issue:', e);
+  }
+
+  document.getElementById('lead-form-section').style.display = 'none';
+  document.getElementById('success-state').classList.add('visible');
+  document.getElementById('success-state').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ──────────────────────────────────────────────────────────
+// RESTART
+// ──────────────────────────────────────────────────────────
+function restartQuiz() {
+  answers.name = ''; answers.group = ''; answers.area = '';
+  answers.vibe = []; answers.budget = ''; answers.duration = ''; answers.connection = '';
+  if (countdownTimer) clearInterval(countdownTimer);
+
+  document.getElementById('name-input').value = '';
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  ['next-2','next-3','next-4','next-5','next-6','next-7'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.disabled = true;
+  });
+  document.getElementById('plan-items').innerHTML = '';
+  document.getElementById('blur-overlay').classList.remove('hidden');
+  document.getElementById('countdown-badge').classList.remove('hidden');
+  document.getElementById('lead-first').value = '';
+  document.getElementById('lead-last').value = '';
+  document.getElementById('lead-email').value = '';
+  document.getElementById('lead-phone').value = '';
+  document.getElementById('opt-in-cb').checked = false;
+  document.getElementById('btn-claim').textContent = 'Claim My Weekend Plan 🗺️';
+  document.getElementById('btn-claim').disabled = false;
+
+  document.getElementById('success-state').classList.remove('visible');
+  document.getElementById('lead-form-section').style.display = '';
+  document.getElementById('plan-section').classList.remove('visible');
+  document.getElementById('share-section').classList.remove('visible');
+  document.getElementById('lead-form-section').classList.remove('visible');
+  document.getElementById('mode-picker').style.display = '';
+  showStep(1);
+  document.getElementById('quiz-section').classList.remove('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 </body>
 </html>
